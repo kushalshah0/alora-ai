@@ -22,7 +22,7 @@ export function Header() {
           <Button variant="ghost" onClick={handleHamburger} aria-label="Toggle sidebar">
             <Menu size={18} />
           </Button>
-          <h1 className="text-lg font-semibold">ChudAI</h1>
+          <h1 className="text-lg font-semibold">Alora AI</h1>
         </div>
         <div className="flex items-center gap-2">
           {active && (
