@@ -34,7 +34,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/alora-ai.git
+   git clone https://github.com/kushalshah0/alora-ai.git
    cd alora-ai
    ```
 
@@ -49,7 +49,6 @@
    
    Create a `.env` file in the root directory:
    ```env
-   VITE_APP_NAME="Alora AI"
    VITE_OPENROUTER_API_KEY=your_openrouter_api_key_here
    # Optional: Add other provider keys
    VITE_OPENAI_API_KEY=your_openai_api_key_here
@@ -113,7 +112,6 @@ The app supports multiple AI providers. Configure them in your `.env` file:
 |----------|---------------------|------------------|
 | OpenRouter | `VITE_OPENROUTER_API_KEY` | GPT-4, Claude, Llama, and more |
 | OpenAI | `VITE_OPENAI_API_KEY` | GPT-4, GPT-3.5-turbo |
-| CloseRouter | `VITE_CLOSEROUTER_API_KEY` | Custom models |
 
 ### Customization
 
@@ -216,10 +214,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - All contributors and users of this project
 
 ---
-
-<div align="center">
-  <p>Made with ❤️ by <a href="https://github.com/yourusername">Your Name</a></p>
-  <p>
-    <a href="#top">🔝 Back to top</a>
-  </p>
-</div>
