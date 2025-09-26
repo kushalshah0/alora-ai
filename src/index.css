@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased transition-colors duration-300 ease-in-out;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* App background gradients */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(59, 130, 246, 0.15), transparent 60%),
+    radial-gradient(600px 300px at 80% 0%, rgba(139, 92, 246, 0.15), transparent 60%),
+    radial-gradient(800px 400px at 50% 100%, rgba(16, 185, 129, 0.12), transparent 70%);
+}
+.dark body::before {
+  background:
+    radial-gradient(600px 300px at 20% 10%, rgba(59, 130, 246, 0.12), transparent 60%),
+    radial-gradient(600px 300px at 80% 0%, rgba(139, 92, 246, 0.12), transparent 60%),
+    radial-gradient(800px 400px at 50% 100%, rgba(16, 185, 129, 0.10), transparent 70%);
+}
+
+/* Glass utilities */
+.glass {
+  @apply bg-white/50 dark:bg-gray-900/30 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-md;
+}
+.glass-soft {
+  @apply bg-white/40 dark:bg-gray-900/20 backdrop-blur border border-white/10 dark:border-white/5 shadow;
+}
+
+/* Scrollbar styling */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  @apply bg-gray-300/70 dark:bg-gray-700/70 rounded;
+}
+*::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Modern thin scrollbar utility (apply to specific elements) */
+.scrollbar-modern {
+  scrollbar-width: thin; /* Firefox */
+}
+.scrollbar-modern::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-modern::-webkit-scrollbar-thumb {
+  @apply bg-gray-300/80 dark:bg-gray-700/80 rounded-full;
+}
+.scrollbar-modern::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced transitions for glass elements */
+.glass {
+  transition: all 0.3s ease-in-out;
+}
+
+.glass:hover {
+  @apply bg-white/60 dark:bg-gray-900/40 shadow-lg;
+}
+
+.glass-soft {
+  transition: all 0.2s ease-out;
+}
+
+.glass-soft:hover {
+  @apply bg-white/50 dark:bg-gray-900/30 shadow-md;
+}
+
+/* Smooth focus transitions */
+*:focus-visible {
+  transition: all 0.2s ease-out;
+}
+
+/* Animation keyframes for enhanced UX */
+@keyframes gentle-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-gentle-bounce {
+  animation: gentle-bounce 0.6s ease-in-out;
+}
+
+/* Stagger animation utility */
+.stagger-in > * {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger-in > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
