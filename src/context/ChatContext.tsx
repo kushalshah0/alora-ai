@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { STORAGE_KEYS, getProviderForModel, DEFAULT_MODEL, TEXT_MODELS, IMAGE_MODELS } from '../utils/constants'
+import { STORAGE_KEYS, getProviderForModel, DEFAULT_MODEL } from '../utils/constants'
 import { generateId } from '../utils/helpers'
 
 export type Message = { id: string; role: 'user' | 'assistant' | 'system'; content: string; timestamp: string; status?: 'sent' | 'error' | 'streaming' }
