@@ -1,6 +1,7 @@
 import './index.css'
 import { UserProvider } from './context/UserContext'
 import { ChatProvider } from './context/ChatContext'
+import { ChatModeProvider } from './context/ChatModeContext'
 import { Header } from './components/layout/Header'
 import { Layout } from './components/layout/Layout'
 import { ConversationSidebar } from './components/chat/ConversationSidebar'
@@ -28,9 +29,11 @@ function App() {
   return (
       <UserProvider>
         <ChatProvider>
-          <UIProvider>
-            <Main />
-          </UIProvider>
+          <ChatModeProvider>
+            <UIProvider>
+              <Main />
+            </UIProvider>
+          </ChatModeProvider>
         </ChatProvider>
       </UserProvider>
   )

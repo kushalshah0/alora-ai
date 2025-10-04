@@ -1,46 +1,32 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
-import { Copy, Check } from 'lucide-react'
+import { Download } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { useState } from 'react'
 import type { Conversation, Message } from '../../context/ChatContext'
 
 export function MessageList({ conversation }: { conversation: Conversation }) {
-  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
-
-  const handleCopy = async (messageId: string, content: string) => {
+  const handleDownloadImage = async (imageUrl: string, fileName?: string) => {
     try {
-      // Try modern clipboard API first
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(content)
-      } else {
-        // Fallback for older browsers or mobile devices
-        const textArea = document.createElement('textarea')
-        textArea.value = content
-        textArea.style.position = 'fixed'
-        textArea.style.left = '-9999px'
-        textArea.style.top = '-9999px'
-        document.body.appendChild(textArea)
-        textArea.focus()
-        textArea.select()
-        
-        try {
-          document.execCommand('copy')
-        } catch (fallbackErr) {
-          console.error('Fallback copy failed: ', fallbackErr)
-          throw fallbackErr
-        } finally {
-          document.body.removeChild(textArea)
-        }
-      }
-      
-      setCopiedMessageId(messageId)
-      setTimeout(() => setCopiedMessageId(null), 2000)
+      const response = await fetch(imageUrl)
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = fileName || `alora-ai-image-${Date.now()}.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
     } catch (err) {
-      console.error('Failed to copy text: ', err)
-      // You could add a toast notification here to inform user of copy failure
+      console.error('Failed to download image: ', err)
     }
+  }
+
+  const extractImageFromMarkdown = (content: string) => {
+    const imageRegex = /!\[.*?\]\((.*?)\)/g
+    const matches = [...content.matchAll(imageRegex)]
+    return matches.map(match => match[1])
   }
 
   return (
@@ -70,10 +56,25 @@ export function MessageList({ conversation }: { conversation: Conversation }) {
                     remarkPlugins={[remarkGfm]} 
                     rehypePlugins={[rehypeHighlight]}
                     components={{
+                      img: ({src, alt, ...props}: any) => {
+                        if (!src) return null
+                        
+                        return (
+                          <div className="my-4 max-w-md">
+                            <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                              <img 
+                                src={src} 
+                                alt={alt || ''} 
+                                className="w-full h-auto object-cover"
+                                {...props}
+                              />
+                            </div>
+                          </div>
+                        )
+                      },
                       code: ({className, children, ...props}: any) => {
                         const match = /language-(\w+)/.exec(className || '')
                         const isInline = !match
-                        const codeContent = String(children).replace(/\n$/, '')
                         
                         if (isInline) {
                           return (
@@ -89,15 +90,6 @@ export function MessageList({ conversation }: { conversation: Conversation }) {
                               <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
                                 {match ? match[1] : 'code'}
                               </span>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleCopy(`code-${Date.now()}`, codeContent)}
-                                className="opacity-70 hover:opacity-100 transition-opacity h-6 w-6 p-0"
-                                title="Copy code"
-                              >
-                                <Copy size={12} />
-                              </Button>
                             </div>
                             <pre className="bg-gray-50 dark:bg-gray-900 p-3 rounded-b-md overflow-x-auto text-sm max-w-full">
                               <code className={className} {...props}>
@@ -124,21 +116,29 @@ export function MessageList({ conversation }: { conversation: Conversation }) {
                 <p className="whitespace-pre-wrap">{m.content}</p>
               )}
             </div>
-            {m.role === 'assistant' && m.status !== 'streaming' && m.status !== 'error' && (
-              <div className="mt-2">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => handleCopy(m.id, m.content)} 
-                  className={`flex items-center justify-center transition-colors duration-200 ${
-                    copiedMessageId === m.id ? 'text-green-600' : ''
-                  }`}
-                  title={copiedMessageId === m.id ? 'Copied!' : 'Copy message'}
-                >
-                  {copiedMessageId === m.id ? <Check size={14} /> : <Copy size={14} />}
-                </Button>
-              </div>
-            )}
+            {m.role === 'assistant' && m.status !== 'streaming' && m.status !== 'error' && (() => {
+              const images = extractImageFromMarkdown(m.content)
+              const hasImages = images.length > 0
+              
+              return hasImages ? (
+                <div className="mt-2">
+                  <div className="flex items-center gap-2">
+                    {images.map((imageUrl, index) => (
+                      <Button
+                        key={index}
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDownloadImage(imageUrl, `alora-ai-image-${index + 1}.png`)}
+                        className="flex items-center justify-center transition-colors duration-200 border border-white/50 hover:border-white/80"
+                        title="Download image"
+                      >
+                        <Download size={14} />
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ) : null
+            })()}
           </div>
         </div>
       ))}

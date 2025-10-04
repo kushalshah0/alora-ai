@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { useChat } from '../../hooks/useChat'
 import { useAI } from '../../hooks/useAI'
+import { useChatMode } from '../../context/ChatModeContext'
 import { MessageList } from './MessageList'
 import { MessageInput } from './MessageInput'
+import logoImage from '../../assets/logo.jpg'
 
 export function ChatInterface() {
   const { active, createConversation, addMessage } = useChat()
   const { isTyping, send } = useAI()
+  const { setConversationId } = useChatMode()
   const scroller = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -14,6 +17,11 @@ export function ChatInterface() {
       createConversation({})
     }
   }, [active])
+
+  // Update the chat mode context when active conversation changes
+  useEffect(() => {
+    setConversationId(active?.id || null)
+  }, [active?.id, setConversationId])
 
   useEffect(() => {
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: 'smooth' })
@@ -35,11 +43,15 @@ export function ChatInterface() {
             ) : (
               <div className="flex items-center justify-center h-full min-h-[60vh]">
                 <div className="text-center max-w-md mx-auto px-6">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-2xl">🤖</span>
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-lg overflow-hidden border-1 border-white/20">
+                    <img 
+                      src={logoImage} 
+                      alt="Alora AI" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                    Welcome
+                    Welcome to Alora AI
                   </h1>
                   <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                     I'm here to help you with questions, writing, coding, analysis, and more. 

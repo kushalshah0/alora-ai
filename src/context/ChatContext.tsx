@@ -1,9 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { STORAGE_KEYS } from '../utils/constants'
+import { STORAGE_KEYS, getProviderForModel, DEFAULT_MODEL, TEXT_MODELS, IMAGE_MODELS } from '../utils/constants'
 import { generateId } from '../utils/helpers'
 
 export type Message = { id: string; role: 'user' | 'assistant' | 'system'; content: string; timestamp: string; status?: 'sent' | 'error' | 'streaming' }
-export type Conversation = { id: string; title: string; provider: 'closerouter' | 'openai' | 'anthropic' | 'openrouter'; model: string; messages: Message[]; createdAt: string; updatedAt: string }
+export type Conversation = { id: string; title: string; provider: 'closerouter' | 'openai' | 'anthropic' | 'openrouter' | 'gemini' | 'pollinations'; model: string; messages: Message[]; createdAt: string; updatedAt: string }
 
 export type ChatState = { conversations: Record<string, Conversation>; activeConversation?: string }
 
@@ -45,11 +45,13 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const createConversation = useCallback((init?: Partial<Pick<Conversation, 'title' | 'provider' | 'model'>>) => {
     const id = generateId('conv')
     const now = new Date().toISOString()
+    const model = init?.model || DEFAULT_MODEL
+    const provider = init?.provider || getProviderForModel(model)
     const convo: Conversation = {
       id,
       title: init?.title || 'New Chat',
-      provider: (init?.provider as any) || 'openrouter',
-      model: init?.model || 'openai/gpt-oss-20b:free',
+      provider: provider as any,
+      model,
       messages: [],
       createdAt: now,
       updatedAt: now,
@@ -138,7 +140,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     setState(s => {
       const convo = s.conversations[id]
       if (!convo) return s
-      const next: Conversation = { ...convo, model, updatedAt: new Date().toISOString() }
+      const provider = getProviderForModel(model)
+      const next: Conversation = { ...convo, model, provider: provider as any, updatedAt: new Date().toISOString() }
       return { ...s, conversations: { ...s.conversations, [id]: next } }
     })
   }, [])

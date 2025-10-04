@@ -3,6 +3,26 @@ import { ChevronDown, Sparkles } from 'lucide-react'
 
 // Helper function to format model names for display
 function formatModelName(modelPath: string): string {
+  // Handle Gemini models (direct format: gemini-2.5-flash, gemini-2.5-pro, etc.)
+  if (modelPath.startsWith('gemini-')) {
+    if (modelPath === 'gemini-2.5-flash') return 'Gemini 2.5 Flash'
+    if (modelPath === 'gemini-2.5-pro') return 'Gemini 2.5 Pro'
+    if (modelPath === 'gemini-2.0-flash') return 'Gemini 2.0 Flash'
+    if (modelPath === 'gemini-flash-latest') return 'Gemini Flash (Latest)'
+    if (modelPath === 'gemini-pro-latest') return 'Gemini Pro (Latest)'
+    
+    // Pollinations.AI models
+    if (modelPath === 'pollinations-text') return 'Pollinations Text'
+    if (modelPath === 'flux') return 'Flux (Image)'
+    if (modelPath === 'turbo') return 'Turbo (Image)'
+    if (modelPath === 'nanobanana') return 'Nano Banana (Image)'
+    if (modelPath === 'seedream') return 'SeeDream (Image)'
+    // Fallback for other Gemini models
+    return modelPath.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
+  }
+  
   // Handle OpenRouter format: provider/model-name or provider/model-name:variant
   const parts = modelPath.split('/')
   if (parts.length === 2) {

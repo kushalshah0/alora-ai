@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useChatContext } from '../context/ChatContext'
 import { sendAIRequest, type ChatMessage } from '../services/aiProviders'
+import { DEFAULT_MODEL, getProviderForModel } from '../utils/constants'
 
 function getErrorMessage(error: any): string {
   const message = error?.message || 'Unknown error'
@@ -53,8 +54,8 @@ export function useAI() {
       }
       
       assistantMessage = addMessage(active.id, { role: 'assistant', content: '', status: 'streaming' })
-      const model = active.model || 'deepseek/deepseek-chat-v3.1:free'
-      const provider = active.provider || 'openrouter'
+      const model = active.model || DEFAULT_MODEL
+      const provider = active.provider || getProviderForModel(model)
       let buffered = ''
       
       const content = await sendAIRequest(
