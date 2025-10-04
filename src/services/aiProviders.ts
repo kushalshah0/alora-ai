@@ -80,7 +80,7 @@ export const providers: Record<ProviderKey, Provider> = {
       'Content-Type': 'application/json',
       'X-goog-api-key': apiKey,
     }),
-    formatRequest: (messages: ChatMessage[], model: string, { temperature = 0.7, max_tokens = 8192 }) => ({
+    formatRequest: (messages: ChatMessage[], _model: string, { temperature = 0.7, max_tokens = 8192 }) => ({
       contents: messages.map(msg => ({
         role: msg.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: msg.content }]
