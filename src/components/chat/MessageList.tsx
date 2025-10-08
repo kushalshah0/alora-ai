@@ -4,6 +4,7 @@ import rehypeHighlight from 'rehype-highlight'
 import { Download } from 'lucide-react'
 import { Button } from '../ui/Button'
 import type { Conversation, Message } from '../../context/ChatContext'
+import logoImage from '../../assets/logo.jpg'
 
 export function MessageList({ conversation }: { conversation: Conversation }) {
   const handleDownloadImage = async (imageUrl: string, fileName?: string) => {
@@ -39,8 +40,14 @@ export function MessageList({ conversation }: { conversation: Conversation }) {
           }`}
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-base select-none transition-all duration-200">
-            {m.role === 'assistant' ? '🤖' : '👤'}
+          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-base select-none transition-all duration-200 overflow-hidden">
+            {m.role === 'assistant' ? (
+              <img 
+                src={logoImage} 
+                alt="Alora AI" 
+                className="w-full h-full object-cover"
+              />
+            ) : '👤'}
           </div>
           <div className="flex-1 min-w-0 pt-2">
             <div className={`flex items-center gap-2 text-xs text-gray-500 transition-colors duration-200 ${
