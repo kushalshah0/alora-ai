@@ -32,7 +32,7 @@ export const DEFAULT_MODELS: Record<ProviderKey, string[]> = {
 export const DEFAULT_PROVIDER: ProviderKey = 'gemini'
 
 // Default model selection
-export const DEFAULT_MODEL = 'gemini-2.5-flash'
+export const DEFAULT_MODEL = 'gemini-2.5-pro'
 
 // Text models (for conversations)
 export const TEXT_MODELS = [
