@@ -57,22 +57,18 @@ export function ChatInterface() {
                     I'm here to help you with questions, writing, coding, analysis, and more. 
                     What would you like to explore today?
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                    <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">💡 Ask Questions</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Get answers on any topic</div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                    <div className="group cursor-pointer p-3 rounded-xl bg-white/20 dark:bg-gray-900/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-900/30 hover:border-white/50 dark:hover:border-gray-600/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                      <div className="text-xs font-medium text-gray-900 dark:text-gray-100 group-hover:scale-105 transition-transform duration-300">💡 Ask</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">💻 Write Code</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Build and debug programs</div>
+                    <div className="group cursor-pointer p-3 rounded-xl bg-white/20 dark:bg-gray-900/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-900/30 hover:border-white/50 dark:hover:border-gray-600/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                      <div className="text-xs font-medium text-gray-900 dark:text-gray-100 group-hover:scale-105 transition-transform duration-300">💻 Code</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">✍️ Create Content</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Write, edit, and brainstorm</div>
+                    <div className="group cursor-pointer p-3 rounded-xl bg-white/20 dark:bg-gray-900/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-900/30 hover:border-white/50 dark:hover:border-gray-600/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                      <div className="text-xs font-medium text-gray-900 dark:text-gray-100 group-hover:scale-105 transition-transform duration-300">✍️ Create</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">📊 Analyze Data</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Process and interpret information</div>
+                    <div className="group cursor-pointer p-3 rounded-xl bg-white/20 dark:bg-gray-900/20 backdrop-blur-md border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-900/30 hover:border-white/50 dark:hover:border-gray-600/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+                      <div className="text-xs font-medium text-gray-900 dark:text-gray-100 group-hover:scale-105 transition-transform duration-300">📊 Analyze</div>
                     </div>
                   </div>
                 </div>
